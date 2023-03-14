@@ -1,0 +1,64 @@
+/************************************** 
+Default page style for 
+box-sizing, padding, margin  
+**************************************/
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /************************************** 
+  Default body style for
+  font-family, margin
+  **************************************/
+  body {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+  }
+
+  header
+  {
+    background-color: skyblue;
+  }
+  header h2
+    {
+      text-align: center;
+    }
+
+  #cityInput{
+    width:100%;
+  }
+
+  ul  {
+    list-style:none;
+    padding:0px;
+    margin-left:10px;
+
+  }
+  li {
+    margin-bottom: 20px;
+
+  }
+  #cities li{
+    background-color: lightgray;
+    text-align: center;
+  }
+  #searchWeather{
+    background-color:blue;
+    color:white;
+    width:100%
+  }
+
+  #current {
+    border:2px solid black;
+    padding:10px;
+  }
+
+  .card{
+    background-color: rgba(4, 4, 53, 0.875);
+    color:white;
+    margin-right:20px;
+    padding:10px;
+  }
