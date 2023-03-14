@@ -13,18 +13,18 @@
   <!-- 
   -->
     <header>
-      <h2>Weather Dashboard</h2>
+      <h1>Weather Dashboard</h1>
     </header>
 
     <!-- Main section of the Weather Dashboard -->
   <main>
     <div class="row" >
-      <nav class="col-sm-3" >
-        <ul id="searchArea">
-          <li><h3>Search for a City</h3></li>
-          <li><input id="cityInput" type="text" placeholder="City, State" /></li>
-          <li><button id="searchCity">Search</button></li>
-        </ul>
+      <nav class="col-sm-3" >        
+          <form id="searchArea">
+            <h2>Search for a City</h2>
+            <input id="cityInput" type="text" placeholder="City" /><br/>
+            <button type="submit" id="searchCity">Search</button>           
+          </form>
         <hr/>
         <ul id="cities">
           <li>New York</li>
@@ -34,13 +34,9 @@
       </nav>
       <div class="col-sm-9 row" >
         <div id="current">
-          <h3 id="city"></h3>
-          <h4 id="temp"></h4>
-          <h4 id="wind"></h4>
-          <h4 id="humidity"></h4>
         </div><br/>
         <div>
-          <h3>5-Day Forecast</h3>
+          <h2>5-Day Forecast</h2>
         </div><br/>
         <div class="row">
           <div id="forcastCard-1" class="col card ">
