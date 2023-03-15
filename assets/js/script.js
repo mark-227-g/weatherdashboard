@@ -37,7 +37,7 @@ class WeatherAPI{
     geoCodeURL(city,limit=1)
     {
       //  return("https://api.openweathermap.org/geo/1.0/direct?q="+city+","+state+","+country+"&limit="+limit+"&units=imperial&appid="+this.key);
-      return("https://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit="+limit+"&units=imperial&appid="+this.key);
+      return("https://api.openweathermap.org/geo/1.0/direct?q="+city+",,US&limit="+limit+"&units=imperial&appid="+this.key);
     };
 
     /* --------------------------------
@@ -77,6 +77,7 @@ var searchCityButtons=[];
 buttons
 **************************************/
 var searchBtnEl = document.querySelector("#searchCity");
+var clearCityBtnEl = document.querySelector("#clearCityBtn");
 var form = document.querySelector('form');
 
 
@@ -153,6 +154,7 @@ function createCityButton(cityName)
 {
     if( !searchCityButtons.includes(cityName))
     {
+        document.getElementById("cityInput").value="";
         searchCityButtons.push(cityName);
         saveCityButtons();
         var cityButton=document.createElement("button");
@@ -250,13 +252,22 @@ function searchCity(event)
     {
         startGetWeather(searchTxt);
     };
-
-
 }
+
+/************************************** 
+function - eventhandler for clear button
+**************************************/
+function clearCity(event)
+{
+    searchCityButtons=[];
+    document.getElementById("cities").innerHTML="";
+    localStorage.setItem("savedcities",JSON.stringify(searchCityButtons));
+  
+};
 /************************************** 
 Add event listeners
 **************************************/
-
+clearCityBtnEl.addEventListener("click",clearCity);
 form.addEventListener("submit", searchCity);
 
 $(document).ready(loadCityButtons)
