@@ -1,19 +1,15 @@
 /************************************** 
 References
 **************************************/
-
-/************************************** 
-global variables
-**************************************/
-var weatherURLKey="cd9964c300819532fb2997b8363c0542";
-
-/************************************** 
-buttons
-**************************************/
-var searchBtnEl = document.querySelector("#searchCity");
-
 /************************************** 
 classes
+**************************************/
+
+/************************************** 
+The WeatherAPI class is used for getting
+the openweathermap.org urls. The constructor
+accepts the weather key. The weather key
+is applied to the URLs
 **************************************/
 class WeatherAPI{
     /* --------------------------------
@@ -57,22 +53,40 @@ class WeatherAPI{
     return url for 5 day forecast
     by latitute and longitute
     -------------------------------- */
-    weatherForcastURL(lat,lon)
+    weatherForecastURL(lat,lon)
     {
         return("https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&cnt=40&units=imperial&appid="+this.key);
     };   
 };
 
+
+/************************************** 
+global variables
+**************************************/
+
 /* --------------------------------
 declare new weather class object 
 and pass in key
 -------------------------------- */
+var weatherURLKey="cd9964c300819532fb2997b8363c0542";
 let w = new WeatherAPI(weatherURLKey);
-var wLat=0;
-var wLon=0;
+
+var searchCityButtons=[];
+
+/************************************** 
+buttons
+**************************************/
+var searchBtnEl = document.querySelector("#searchCity");
+var form = document.querySelector('form');
+
 
 /************************************** 
 functions
+**************************************/
+
+/************************************** 
+function 
+convert UTC timestamp to date-time
 **************************************/
 function convertDT(timestamp)
 {
@@ -80,6 +94,10 @@ function convertDT(timestamp)
     return(date);
 };
 
+/************************************** 
+function
+build url for weather icon
+**************************************/
 function getWeatherIcon(id){
     var url="https://openweathermap.org/img/wn/"+id+".png";
     var img="<img src="+url+" ></img>";
@@ -87,38 +105,94 @@ function getWeatherIcon(id){
 }
 
 
-
+/************************************** 
+function
+Show the results of the current weather search
+**************************************/
 function ShowCurrentWeather(data)
 {
-console.log(data);
 document.getElementById("city").innerHTML= `<h2>${data.name} (${convertDT(data.dt).toLocaleDateString()}) ${getWeatherIcon(data.weather[0].icon)}</h2>`;
 document.getElementById("temp").innerHTML="Temp: "+data.main.temp+" &#8457;";
 document.getElementById("wind").textContent="Wind: "+data.wind.speed+" MPH";
 document.getElementById("humidity").textContent="Humidity: "+data.main.humidity+"%";
 };
 
-
+/************************************** 
+function
+build forecast cards with the search results
+**************************************/
 function fillWeatherCards(data)
 {
-var cardCount=1;
-for (var i = 0; i < data.cnt; i+=1) {
-    if(convertDT(data.list[i].dt).getHours()==11)
+    document.getElementById("5DayForecast").innerHTML="";
+    for (var i = 0; i < data.cnt; i+=1) 
     {
-        var ul=document.createElement("ul");
-        ul.innerHTML = `<li> ${convertDT(data.list[i].dt).toLocaleDateString()}</l1>
-        <li>${getWeatherIcon(data.list[i].weather[0].icon)}</li>
-        <li>Temp: ${data.list[i].main.temp} &#8457 </li>
-        <li>Wind: ${data.list[i].wind.speed} MPH </li>
-        <li> Humidity: ${data.list[i].main.humidity}%</li>
-        `;
-        document.getElementById("forcastCard-"+cardCount).innerHTML="";
-        document.getElementById("forcastCard-"+cardCount).append(ul);
-        cardCount++;
-    };
+        // the search results return multiple hours for each day
+        // choose 11am as the average time to display data for
+        if(convertDT(data.list[i].dt).getHours()==11)
+        {
+            var card=document.createElement("div");
+            card.className="col card";
+            var ul=document.createElement("ul");
+            ul.innerHTML = `<li> ${convertDT(data.list[i].dt).toLocaleDateString()}</l1>
+            <li>${getWeatherIcon(data.list[i].weather[0].icon)}</li>
+            <li>Temp: ${data.list[i].main.temp} &#8457 </li>
+            <li>Wind: ${data.list[i].wind.speed} MPH </li>
+            <li> Humidity: ${data.list[i].main.humidity}%</li>
+            `;
+            card.append(ul);
+            document.getElementById("5DayForecast").append(card);
+        };
   }
 };
 
+/************************************** 
+function
+create city button
+**************************************/
+function createCityButton(cityName)
+{
+    if( !searchCityButtons.includes(cityName))
+    {
+        searchCityButtons.push(cityName);
+        saveCityButtons();
+        var cityButton=document.createElement("button");
+        cityButton.textContent=cityName;
+        cityButton.value=cityName;
+        cityButton.className="citybutton";
+        cityButton.addEventListener("click",cityButtonClick);
+        var cityLi=document.createElement("li");
+        cityLi.appendChild(cityButton);
+        document.getElementById("cities").append(cityLi);
+    };
+}
+function saveCityButtons()
+{
+    localStorage.setItem("savedcities",JSON.stringify(searchCityButtons));
+};
 
+function loadCityButtons()
+{
+    var s=JSON.parse(localStorage.getItem("savedcities"));
+    if(s)
+    {
+        for(var i=0;i<s.length;i++)
+        {
+            createCityButton(s[i]);
+        };
+    };
+}
+/************************************** 
+function - eventhandler for city button click
+**************************************/
+function cityButtonClick(event)
+{
+    startGetWeather(event.target.value);
+}
+
+/************************************** 
+function
+perform weather request and call function to show
+**************************************/
 function getWeather()
 {
     //fetch(w.weatherURL(40.735657,-74.1723667))
@@ -131,10 +205,13 @@ function getWeather()
     });
 };
 
-function getForcast()
+/************************************** 
+function
+perform forecast request and call function to show
+**************************************/
+function getForecast()
 {
-    //fetch(w.weatherForcastURL(40.735657,-74.1723667))
-    fetch(w.weatherForcastURL(wLat,wLon))
+    fetch(w.weatherForecastURL(wLat,wLon))
         .then(function (response) {
             return response.json();
         })
@@ -143,41 +220,45 @@ function getForcast()
         });
 };
 
-function getGeocode(city,state)
+/************************************** 
+function
+look up the geo code by city and state
+**************************************/
+function startGetWeather(city,state)
 {
     fetch(w.geoCodeURL(city,state))
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            //console.log(data)
             wLat=data[0].lat;
             wLon=data[0].lon;
-            //console.log(w.lat+" : "+ w.lon);
+            createCityButton(data[0].name);
             getWeather();
-            getForcast();
+            getForecast();
         });
 }
 
+/************************************** 
+function - eventhandler for submit button
+**************************************/
 function searchCity(event)
 {
     event.preventDefault()
-    console.log(event.target.children);
     var searchTxt=document.getElementById("cityInput").value;
-    //const searchValue= searchTxt.split(",");
     if(searchTxt.length)
     {
-        //w.city=searchValue[0].trim();
-        //w.state=searchValue[1].trim();
-        getGeocode(searchTxt);
+        startGetWeather(searchTxt);
     };
 
 
 }
 /************************************** 
-Add event listener to generate button
+Add event listeners
 **************************************/
-var form = document.querySelector('form')
+
 form.addEventListener("submit", searchCity);
+
+$(document).ready(loadCityButtons)
 
 

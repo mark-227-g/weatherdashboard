@@ -8,74 +8,88 @@ box-sizing, padding, margin
     margin: 0;
   }
   
-  /************************************** 
-  Default body style for
-  font-family, margin
-  **************************************/
-  body {
-    font-family: Arial;
-    margin: 0;
-    padding: 0;
-  }
+/************************************** 
+Default body style for
+font-family, margin
+**************************************/
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+}
 
-  header
-  {
-    background-color: skyblue;
-  }
-  h1
-  {
-    text-align: center;
-    font-weight: bold;
-    
-  }
-  h2
-    {
-      text-align: left;
-      font-weight: bold;
-      font-size:x-large;
-     
-    }
+header
+{
+  background-color: skyblue;
+}
 
-  nav {
-    margin-left:15px;
-    margin-right:15px;
-  }
-
-  ul  {
-    list-style:none;
-    padding:0px;
-    margin-left:0;
-
-  }
-  li {
-    margin-bottom: 20px;
-
-  }
-
-  #cityInput{
-    width:100%;
-    margin-bottom:20px;
-  }
-
-  #cities li{
-    background-color: lightgray;
-    text-align: center;
-  }
+h1
+{
+  text-align: center;
+  font-weight: bold;
   
-  #searchCity{
-    background-color:blue;
-    color:white;
-    width:100%
-  }
+}
 
-  #current {
-    border:2px solid black;
-    padding:10px;
-  }
+h2
+{
+  text-align: left;
+  font-weight: bold;
+  font-size:x-large;
+  
+}
 
-  .card{
-    background-color: rgba(4, 4, 53, 0.875);
-    color:white;
-    margin-right:20px;
-    padding:10px;
-  }
+nav 
+{
+  margin-left:15px;
+  margin-right:15px;
+}
+
+ul  
+{
+  list-style:none;
+  padding:0px;
+  margin-left:0;
+
+}
+li 
+{
+  margin-bottom: 20px;
+}
+
+#cityInput{
+  width:100%;
+  margin-bottom:20px;
+}
+
+#cities li{
+  background-color: lightgray;
+  text-align: center;
+}
+  
+#searchCity{
+  background-color:blue;
+  color:white;
+  width:100%
+  
+}
+.citybutton {
+  width:100%;
+  border:none;
+  background-color: lightgray;
+  text-align: center;
+}
+.citybutton:hover {
+  background-color:grey;
+}
+
+#current {
+  border:2px solid black;
+  padding:10px;
+}
+
+.card{
+  background-color: rgba(4, 4, 53, 0.875);
+  color:white;
+  margin-right:20px;
+  padding:10px;
+}

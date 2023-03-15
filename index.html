@@ -10,8 +10,6 @@
   </head>
   <body>
 
-  <!-- 
-  -->
     <header>
       <h1>Weather Dashboard</h1>
     </header>
@@ -20,70 +18,26 @@
   <main>
     <div class="row" >
       <nav class="col-sm-3" >        
-          <form id="searchArea">
+          <form id="searchArea" autocomplete="off">
             <h2>Search for a City</h2>
             <input id="cityInput" type="text" placeholder="City" /><br/>
-            <button type="submit" id="searchCity">Search</button>           
+            <button type="submit" id="searchCity" >Search</button>           
           </form>
         <hr/>
         <ul id="cities">
-          <li>New York</li>
-          <li>Chicago</li>
-          <li>Boston</li>
         </ul>
       </nav>
       <div class="col-sm-9 row" >
         <div id="current">
+          <h3 id="city"></h3>
+          <h4 id="temp"></h4>
+          <h4 id="wind"></h4>
+          <h4 id="humidity"></h4>
         </div><br/>
         <div>
           <h2>5-Day Forecast</h2>
         </div><br/>
-        <div class="row">
-          <div id="forcastCard-1" class="col card ">
-            <ul>
-              <li >date</li>
-              <li>symbol</li>
-              <li>Temp:</li>
-              <li>wind:</li>
-              <li>humidity:</li>
-            </ul>
-          </div>
-          <div id="forcastCard-2" class="col card ">
-            <ul>
-              <li >date</li>
-              <li>symbol</li>
-              <li>Temp:</li>
-              <li>wind:</li>
-              <li>humidity:</li>
-            </ul>
-          </div>
-          <div id="forcastCard-3" class="col card ">
-            <ul>
-              <li >date</li>
-              <li>symbol</li>
-              <li>Temp:</li>
-              <li>wind:</li>
-              <li>humidity:</li>
-            </ul>
-          </div>
-          <div id="forcastCard-4" class="col card ">
-            <ul>
-              <li >date</li>
-              <li>symbol</li>
-              <li>Temp:</li>
-              <li>wind:</li>
-              <li>humidity:</li>
-            </ul>
-          </div>
-          <div id="forcastCard-5" class="col card ">
-            <ul>
-              <li >date</li>
-              <li>symbol</li>
-              <li>Temp:</li>
-              <li>wind:</li>
-              <li>humidity:</li>
-            </ul>
-          </div>
+        <div class="row" id="5DayForecast">
         </div>
         <br/>
       </div>
@@ -91,7 +45,7 @@
   </main>
 
       
-
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="assets/js/script.js"></script>
   </body>
 </html>
